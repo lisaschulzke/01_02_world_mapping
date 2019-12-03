@@ -22,12 +22,13 @@
  *
  */
 
+const chalk = require('chalk')
 const rl = require('readline')
-const jimp = require('jimp')
+//const jimp = require('jimp')
 
 clearConsole()
 
-jimp.read('world.jpg', (err, map_image) => {
+/*jimp.read('map.jpg', (err, map_image) => {
   if (err) throw err; //provoziert weitere Fehler, falls ein Fehler auftritt. Dies führt zum Programmabsturz
   //Gegensatz zu try catch 
   map_image.resize(100, 50); //resize ändert die Größe des Bildes
@@ -46,16 +47,30 @@ jimp.read('world.jpg', (err, map_image) => {
 
       //console.log()
     }
-    //2. Koordinaten der ursprünglichen Pixel übernehmen
-    //3. Die Zeichen ausgeben
   }
 });
+*/
 
+function generateInvader (width, height, xPos, yPos) {
+  for (let x = 0; x < width; x++) {
+    for (let y = 0; y < height; y++) {
+      let randomNumber = Math.random();
+      if (randomNumber >= 0.5) {
+        let h = 300;
+        let s = Math.floor(Math.random() * 100);
+        let v = Math.floor(Math.random() * 100);
+        writeCharacterToConsole(chalk.hsv(h, s, v) ('◼'), x + xPos, y + yPos)
+        writeCharacterToConsole(chalk.hsv(h, s, v) ('◼'), (2 * width - x) + xPos, y + yPos)
+      }
+    }
+  } rl.cursorTo(process.stdout, 100, 100)
+}
 
-
-//Vorerst nur ein Platzhalter
 setInterval(function () {
-
+  const xPos = Math.floor(Math.random() * 200);
+  const yPos = Math.floor(Math.random() * 50);
+  clearConsole();
+  generateInvader(10, 5, xPos, yPos);
 }, 1000);
 
 
